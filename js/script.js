@@ -45,3 +45,20 @@ guessButton.addEventListener("click", function (e) {
         letterInput.value = "";
     }
 });
+
+const validateInput = function (input) {
+     //Use a regular exzpression to ensure a letter is input
+     const acceptedLetter = /[a-zA-Z]/;
+     if (input.length === 0) {
+        guestMessage.innerText = "You didn't input anything!";
+     }
+     else if (input.length > 1) {
+        guestMessage.innerText = "Only one letter at a time please!";
+     }
+    else if (input.match(acceptedLetter)) {
+        guestMessage.innerText = "Only one letter, no symbols or numbers please!";
+    } 
+    else {
+     return input;
+``  }
+};
