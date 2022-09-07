@@ -1,6 +1,6 @@
 
 //The unordered list where the player’s guessed letters will appear.
-const guessedLetters = document.querySelector(".guessed-letters");
+const guessedLettersElement = document.querySelector(".guessed-letters");
 //The button with the text “Guess!” in it.
 const guessButton = document.querySelector(".guess");
 //The text input where the player will guess a letter.
@@ -17,6 +17,8 @@ const guessMessage = document.querySelector(".message");
 const playAgainButton = document.querySelector(".play-again");
 //Start word before APR
 const word = "magnolia";
+//Empty array for all guessed letters
+const guessedLetters = [];
 
 //Hide the start word with circles
 const hiddenLetters = function (word) {
@@ -38,27 +40,42 @@ hiddenLetters(word);
 guessButton.addEventListener("click", function (e) {
     //Prevent click sub and page reload
     e.preventDefault();
+    //Empty message paragraph
+    guessMessage.innertext = "";
     //Capture letter input
     const guess = letterInput.value;
-    console.log(guess);
-    if (guess !== "") {
-        letterInput.value = "";
+    //Make sure guess is a single letter
+    const goodGuess = validateInput(guess);
+    
+    if (goodGuess) {
+        makeGuess(guess);
     }
+    //Empty input box
+    letterInput.value = "";
 });
 
 const validateInput = function (input) {
      //Use a regular exzpression to ensure a letter is input
      const acceptedLetter = /[a-zA-Z]/;
      if (input.length === 0) {
-        guestMessage.innerText = "You didn't input anything!";
-     }
-     else if (input.length > 1) {
-        guestMessage.innerText = "Only one letter at a time please!";
-     }
-    else if (input.match(acceptedLetter)) {
-        guestMessage.innerText = "Only one letter, no symbols or numbers please!";
-    } 
-    else {
+        guessMessage.innerText = "You didn't input anything!";
+     } else if (input.length > 1) {
+        guessMessage.innerText = "Only one letter at a time please!";
+     } else if (!input.match(acceptedLetter)) {
+        guessMessage.innerText = "Only one letter, no symbols or numbers please!";
+    } else {
      return input;
 ``  }
+};
+
+const makeGuess = function (guess) {
+    //Convert all guesses to uppercase so all casing is uniform
+    guess = guess.toUpperCase();
+    if (guessedLetters.includes(guess)) {
+        guessMessage.innerText = "You already guess that letter silly! Try again.";
+    }
+    else {
+        guessedLetters.push(guess);
+        console.log(guessedLetters);
+    }
 };
