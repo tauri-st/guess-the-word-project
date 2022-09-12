@@ -30,7 +30,7 @@ const getWord = async function () {
     //Grab a random word from the array
         //Split words into an array with split()
         //Use line breaks to seperate them with a delimiter n
-    const wordArray = words.split("/n");
+    const wordArray = words.split("\n");
     console.log(wordArray);
         //Pull random word by produce a random number and multiply by how many items in array
         //Round the number down 0-99 like array index
