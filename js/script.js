@@ -18,7 +18,7 @@ const playAgainButton = document.querySelector(".play-again");
 //Start word before APR
 let word = "magnolia";
 //Empty array for all guessed letters
-const guessedLetters = [];
+let guessedLetters = [];
 //Remaining wrong guesses left
 let remainingGuesses = 8;
 
@@ -121,10 +121,10 @@ const updateWordInProgress = function (guessedLetters) {
     const wordArray = wordUpper.split("");
     //Array of all letters guessed by user
     const updatedLetters = [];
-    for (const newLetter of wordArray) {   
+    for (const letter of wordArray) {   
         //Checks if letter that went thru guessedLetters is in array of the word, if yes then push letter to the new array
-        if (guessedLetters.includes(newLetter)) {
-        updatedLetters.push(newLetter.toUpperCase());
+        if (guessedLetters.includes(letter)) {
+        updatedLetters.push(letter.toUpperCase());
         //Else push a ● to the new array
         } else {
             updatedLetters.push("●")
@@ -148,11 +148,12 @@ const countGuesses = function (guess) {
 //Display how many guesses left
     //If no more guesses, display message
     if (remainingGuesses === 0) {
-        guessMessage.innerText = `You ran out of guesses! The word was <span class="highlight">${word}</span>.`;
+        guessMessage.innerHTML = `You ran out of guesses! The word was <span class="highlight">${word}</span>.`;
+        startOver();
     } else if (remainingGuesses === 1) {
-        guessesLeftSpan.innerText = `You only have one more guess remaining!`;
+        guessesLeftSpan.innerText = `${remainingGuesses} guess`;
     } else {
-        guessesLeftSpan.innerText = `You have ${remainingGuesses} remaining!`
+        guessesLeftSpan.innerText = `${remainingGuesses} guesses`
     }
 };
 
@@ -161,5 +162,30 @@ const didYouWin = function () {
     if (wordInProgress.innerText === word.toUpperCase()) {
         guessMessage.classList.add("win");
         guessMessage.innerHTML = `<p class="highlight">You guessed the correct word! Congrats!</p>`;
+        startOver();
     }
 };
+
+//Reset game to beginning
+const startOver = function () {
+    guessButton.classList.add("hide");
+    guessesLeftParagraph.classList.add("hide");
+    guessedLettersElement.classList.add("hide");
+    playAgainButton.classList.remove("hide");
+};
+
+playAgainButton.addEventListener("click", function () {
+    guessMessage.classList.remove("win");
+    guessedLetters = [];
+    remainingGuesses = 8;
+    guessesLeftSpan.innerText = `${remainingGuesses} guesses`;
+    guessedLettersElement.innerHTML = "";
+    guessMessage.innerText = "";
+
+    guessButton.classList.remove("hide");
+    guessesLeftParagraph.classList.remove("hide");
+    guessedLettersElement.classList.remove("hide");
+    playAgainButton.classList.add("hide");
+
+    getWord();
+});
