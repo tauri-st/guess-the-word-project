@@ -9,20 +9,20 @@ const letterInput = document.querySelector(".letter");
 const wordInProgress = document.querySelector(".word-in-progress");
 //The paragraph where the remaining guesses will display.
 const guessesLeftParagraph = document.querySelector(".remaining");
-//The span inside the paragraph where the remaining guesses will display.
-const guessesLeftSpan = document.querySelector(".remaining span");
+//The span inside the paragraph where the remaining guesses number will display.
+const guessesLeftNumber = document.querySelector(".remaining span");
 //The empty paragraph where messages will appear when the player guesses a letter.
 const guessMessage = document.querySelector(".message");
 //The hidden button that will appear prompting the player to play again
 const playAgainButton = document.querySelector(".play-again");
-//Start word before APR
+//Start word before text brings in list
 let word = "magnolia";
 //Empty array for all guessed letters
 let guessedLetters = [];
 //Remaining wrong guesses left
 let remainingGuesses = 8;
 
-//Async for word txt
+//Async for word to be guessed, call function to hide the word
 const getWord = async function () {
     const request = await fetch("https://gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt");
     const words = await request.text();
@@ -32,7 +32,7 @@ const getWord = async function () {
         //Use line breaks to seperate them with a delimiter n
     const wordArray = words.split("\n");
     console.log(wordArray);
-        //Pull random word by produce a random number and multiply by how many items in array
+        //Pull random word by producing a random number and multiply by how many items in array
         //Round the number down 0-99 like array index
     const randomIndex = Math.floor(Math.random() * wordArray.length);
         //Trim() white space in text file
@@ -57,13 +57,11 @@ const hiddenLetters = function (word) {
     wordInProgress.innerText = lettersArray.join("");
 };
 
-hiddenLetters(word);
-
-//When player clicks Guess button
+//When player clicks Guess button to sub guess
 guessButton.addEventListener("click", function (e) {
-    //Prevent click sub and page reload
+    //Prevent page reload upon click
     e.preventDefault();
-    //Empty message paragraph
+    //Empty message paragraph of previous message
     guessMessage.innertext = "";
     //Capture letter input
     const guess = letterInput.value;
@@ -151,9 +149,9 @@ const countGuesses = function (guess) {
         guessMessage.innerHTML = `You ran out of guesses! The word was <span class="highlight">${word}</span>.`;
         startOver();
     } else if (remainingGuesses === 1) {
-        guessesLeftSpan.innerText = `${remainingGuesses} guess`;
+        guessesLeftNumber.innerText = `${remainingGuesses} guess`;
     } else {
-        guessesLeftSpan.innerText = `${remainingGuesses} guesses`
+        guessesLeftNumber.innerText = `${remainingGuesses} guesses`
     }
 };
 
@@ -178,7 +176,7 @@ playAgainButton.addEventListener("click", function () {
     guessMessage.classList.remove("win");
     guessedLetters = [];
     remainingGuesses = 8;
-    guessesLeftSpan.innerText = `${remainingGuesses} guesses`;
+    guessesLeftNumber.innerText = `${remainingGuesses} guesses`;
     guessedLettersElement.innerHTML = "";
     guessMessage.innerText = "";
 
