@@ -37,7 +37,6 @@ const getWord = async function () {
         hiddenLetters(word);
 };
 
-//Call Async function
 getWord();
 
 //Hide the start word with circles
@@ -47,13 +46,11 @@ const hiddenLetters = function (word) {
         console.log(letter);
         lettersArray.push("●");
     }
-    //Join all the array elements into a string
     wordInProgress.innerText = lettersArray.join("");
 };
 
 //When player clicks Guess button to sub guess
 guessButton.addEventListener("click", function (e) {
-    //Prevent page reload upon click
     e.preventDefault();
     //Empty message paragraph of previous message
     guessMessage.innertext = "";
@@ -70,7 +67,6 @@ guessButton.addEventListener("click", function (e) {
 });
 
 const validateInput = function (input) {
-     //Use a regular exzpression to ensure a letter is input
      const acceptedLetter = /[a-zA-Z]/;
      if (input.length === 0) {
         guessMessage.innerText = "You didn't input anything!";
@@ -84,7 +80,6 @@ const validateInput = function (input) {
 };
 
 const makeGuess = function (guess) {
-    //Convert all guesses to uppercase so all casing is uniform
     guess = guess.toUpperCase();
     if (guessedLetters.includes(guess)) {
         guessMessage.innerText = "You already guess that letter silly! Try again.";
@@ -108,12 +103,10 @@ const displayGuessedLetters = function () {
 
 const updateWordInProgress = function (guessedLetters) {
     const wordUpper = word.toUpperCase();
-    //To split the word into an array
     const wordArray = wordUpper.split("");
     //Array of all letters guessed by user
     const updatedLetters = [];
     for (const letter of wordArray) {   
-        //Checks if letter that went thru guessedLetters is in array of the word, if yes then push letter to the new array
         if (guessedLetters.includes(letter)) {
         updatedLetters.push(letter.toUpperCase());
         //Else push a ● to the new array
@@ -126,7 +119,6 @@ const updateWordInProgress = function (guessedLetters) {
     didYouWin();
 };
 
-//Count players guesses
 const countGuesses = function (guess) {
     const upperWord = word.toUpperCase();
     if (!upperWord.includes(guess)) {
