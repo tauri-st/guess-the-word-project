@@ -28,11 +28,8 @@ const getWord = async function () {
     const words = await request.text();
     //console.log(words);
     //Grab a random word from the array
-        //Split words into an array with split()
-        //Use line breaks to seperate them with a delimiter n
     const wordArray = words.split("\n");
-    console.log(wordArray);
-        //Pull random word by producing a random number and multiply by how many items in array
+        //Pull random word
         //Round the number down 0-99 like array index
     const randomIndex = Math.floor(Math.random() * wordArray.length);
         //Trim() white space in text file
@@ -45,12 +42,9 @@ getWord();
 
 //Hide the start word with circles
 const hiddenLetters = function (word) {
-    //use an array
     const lettersArray = [];
     for (const letter of word) {
-        //Within the loop this consoles out each letter individually
         console.log(letter);
-        //For each item in array add circle to hide the letter
         lettersArray.push("●");
     }
     //Join all the array elements into a string
@@ -97,7 +91,6 @@ const makeGuess = function (guess) {
     }
     else {
         guessedLetters.push(guess);
-        console.log(guessedLetters);
         countGuesses(guess);
         displayGuessedLetters();
         updateWordInProgress(guessedLetters);
@@ -128,7 +121,6 @@ const updateWordInProgress = function (guessedLetters) {
             updatedLetters.push("●")
         }
     };
-    //console.log(updatedLetters);
     //Update the empty paragraph where the word in progress appears
     wordInProgress.innerText = updatedLetters.join("");
     didYouWin();
